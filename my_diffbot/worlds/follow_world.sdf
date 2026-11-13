@@ -32,7 +32,12 @@
         </collision>
         <visual name="v">
           <geometry><plane><normal>0 0 1</normal><size>14 10</size></plane></geometry>
-          <material><ambient>0.45 0.45 0.48 1</ambient><diffuse>0.45 0.45 0.48 1</diffuse></material>
+          <material>
+  <ambient>0.62 0.65 0.69 1</ambient>
+  <diffuse>0.62 0.65 0.69 1</diffuse>
+  <specular>0.25 0.25 0.25 1</specular>
+  <shininess>35</shininess>
+</material>
         </visual>
       </link>
     </model>
@@ -46,7 +51,11 @@
         <collision name="c"><geometry><box><size>12.2 0.2 2</size></box></geometry></collision>
         <visual name="v">
           <geometry><box><size>12.2 0.2 2</size></box></geometry>
-          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+          <material>
+  <ambient>0.55 0.62 0.72 1</ambient>
+  <diffuse>0.55 0.62 0.72 1</diffuse>
+  <specular>0.18 0.18 0.18 1</specular>
+</material>
         </visual>
       </link>
     </model>
@@ -58,7 +67,11 @@
         <collision name="c"><geometry><box><size>12.2 0.2 2</size></box></geometry></collision>
         <visual name="v">
           <geometry><box><size>12.2 0.2 2</size></box></geometry>
-          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+          <material>
+  <ambient>0.55 0.62 0.72 1</ambient>
+  <diffuse>0.55 0.62 0.72 1</diffuse>
+  <specular>0.18 0.18 0.18 1</specular>
+</material>
         </visual>
       </link>
     </model>
@@ -70,7 +83,11 @@
         <collision name="c"><geometry><box><size>0.2 8 2</size></box></geometry></collision>
         <visual name="v">
           <geometry><box><size>0.2 8 2</size></box></geometry>
-          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+          <material>
+  <ambient>0.55 0.62 0.72 1</ambient>
+  <diffuse>0.55 0.62 0.72 1</diffuse>
+  <specular>0.18 0.18 0.18 1</specular>
+</material>
         </visual>
       </link>
     </model>
@@ -82,7 +99,11 @@
         <collision name="c"><geometry><box><size>0.2 8 2</size></box></geometry></collision>
         <visual name="v">
           <geometry><box><size>0.2 8 2</size></box></geometry>
-          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+          <material>
+  <ambient>0.55 0.62 0.72 1</ambient>
+  <diffuse>0.55 0.62 0.72 1</diffuse>
+  <specular>0.18 0.18 0.18 1</specular>
+</material>
         </visual>
       </link>
     </model>
@@ -321,7 +342,101 @@
       </link>
     </model>
 
-    
+
+    <!-- ===== MOVING TARGET: actor following a scripted loop (no physics, so the path keeps clear of everything) ===== -->
+    <actor name="target_actor">
+      <skin>
+        <filename>https://fuel.gazebosim.org/1.0/Mingfei/models/actor/tip/files/meshes/walk.dae</filename>
+        <scale>1.0</scale>
+      </skin>
+      <animation name="walking">
+        <filename>https://fuel.gazebosim.org/1.0/Mingfei/models/actor/tip/files/meshes/walk.dae</filename>
+        <interpolate_x>true</interpolate_x>
+      </animation>
+     
+<script>
+  <loop>true</loop>
+  <delay_start>2.0</delay_start>
+  <auto_start>true</auto_start>
+
+  <trajectory id="0" type="walking">
+
+        <!-- Move right -->
+    <waypoint><time>0.000</time><pose>-4.0000 -2.6000 1.0 0 0 0.1000</pose></waypoint>
+    <waypoint><time>10.750</time><pose>0.3000 -2.6000 1.0 0 0 0.1000</pose></waypoint>
+    <waypoint><time>13.750</time><pose>0.3000 -2.6000 1.0 0 0 0.1000</pose></waypoint>
+    <waypoint><time>23.500</time><pose>4.2000 -2.6000 1.0 0 0 0.1000</pose></waypoint>
+
+    <!-- Turn 1: 0 -> 90 degrees -->
+    <waypoint><time>23.762</time><pose>4.3035 -2.5864 1.0 0 0 0.2618</pose></waypoint>
+    <waypoint><time>24.024</time><pose>4.4000 -2.5464 1.0 0 0 0.5236</pose></waypoint>
+    <waypoint><time>24.285</time><pose>4.4828 -2.4828 1.0 0 0 0.7854</pose></waypoint>
+    <waypoint><time>24.547</time><pose>4.5464 -2.4000 1.0 0 0 1.0472</pose></waypoint>
+    <waypoint><time>24.809</time><pose>4.5864 -2.3035 1.0 0 0 1.3090</pose></waypoint>
+    <waypoint><time>25.071</time><pose>4.6000 -2.2000 1.0 0 0 1.5708</pose></waypoint>
+
+    <!-- Move upwards -->
+    <waypoint><time>36.071</time><pose>4.6000 2.2000 1.0 0 0 1.5708</pose></waypoint>
+
+    <!-- Turn 2: 90 -> 180 degrees -->
+    <waypoint><time>36.333</time><pose>4.5864 2.3035 1.0 0 0 1.8326</pose></waypoint>
+    <waypoint><time>36.594</time><pose>4.5464 2.4000 1.0 0 0 2.0944</pose></waypoint>
+    <waypoint><time>36.856</time><pose>4.4828 2.4828 1.0 0 0 2.3562</pose></waypoint>
+    <waypoint><time>37.118</time><pose>4.4000 2.5464 1.0 0 0 2.6180</pose></waypoint>
+    <waypoint><time>37.380</time><pose>4.3035 2.5864 1.0 0 0 2.8798</pose></waypoint>
+    <waypoint><time>37.642</time><pose>4.2000 2.6000 1.0 0 0 3.1416</pose></waypoint>
+
+    <!-- Move left -->
+    <waypoint><time>47.392</time><pose>0.3000 2.6000 1.0 0 0 3.1416</pose></waypoint>
+    <waypoint><time>50.392</time><pose>0.3000 2.6000 1.0 0 0 3.1416</pose></waypoint>
+    <waypoint><time>60.142</time><pose>-3.6000 2.6000 1.0 0 0 3.1416</pose></waypoint>
+
+    <!-- Turn 3: 180 -> 270 degrees -->
+    <waypoint><time>60.403</time><pose>-3.7035 2.5864 1.0 0 0 3.4034</pose></waypoint>
+    <waypoint><time>60.665</time><pose>-3.8000 2.5464 1.0 0 0 3.6652</pose></waypoint>
+    <waypoint><time>60.927</time><pose>-3.8828 2.4828 1.0 0 0 3.9270</pose></waypoint>
+    <waypoint><time>61.189</time><pose>-3.9464 2.4000 1.0 0 0 4.1888</pose></waypoint>
+    <waypoint><time>61.451</time><pose>-3.9864 2.3035 1.0 0 0 4.4506</pose></waypoint>
+    <waypoint><time>61.712</time><pose>-4.0000 2.2000 1.0 0 0 4.7124</pose></waypoint>
+
+    <!-- Move downwards -->
+    <waypoint><time>72.712</time><pose>-4.0000 -2.2000 1.0 0 0 4.7124</pose></waypoint>
+
+    <!-- Turn 4: 270 -> 360 degrees -->
+    <waypoint><time>72.974</time><pose>-3.9864 -2.3035 1.0 0 0 4.9742</pose></waypoint>
+    <waypoint><time>73.236</time><pose>-3.9464 -2.4000 1.0 0 0 5.2360</pose></waypoint>
+    <waypoint><time>73.498</time><pose>-3.8828 -2.4828 1.0 0 0 5.4978</pose></waypoint>
+    <waypoint><time>73.760</time><pose>-3.8000 -2.5464 1.0 0 0 5.7596</pose></waypoint>
+    <waypoint><time>74.021</time><pose>-3.7035 -2.5864 1.0 0 0 6.0214</pose></waypoint>
+    <waypoint><time>74.283</time><pose>-3.6000 -2.6000 1.0 0 0 6.2832</pose></waypoint>
+
+
+  </trajectory>
+</script>
+
+    </actor>
+
+    <!-- ===== DYNAMIC OBSTACLE: cylinder (physical, ready to be driven via /model/obstacle_cylinder/cmd_vel) ===== -->
+    <model name="obstacle_cylinder">
+      <pose>-3.0 0.5 0.9 0 0 0</pose>
+      <link name="body">
+        <gravity>false</gravity>
+        <inertial>
+          <mass>20</mass>
+          <inertia><ixx>5.71</ixx><iyy>5.71</iyy><izz>0.63</izz><ixy>0</ixy><ixz>0</ixz><iyz>0</iyz></inertia>
+        </inertial>
+        <collision name="c">
+          <geometry><cylinder><radius>0.25</radius><length>1.8</length></cylinder></geometry>
+        </collision>
+        <visual name="v">
+          <geometry><cylinder><radius>0.25</radius><length>1.8</length></cylinder></geometry>
+          <material><ambient>0.1 0.3 0.9 1</ambient><diffuse>0.1 0.3 0.9 1</diffuse></material>
+        </visual>
+      </link>
+      <plugin filename="gz-sim-velocity-control-system" name="gz::sim::systems::VelocityControl"/>
+    </model>
+
+   
 
   </world>
 </sdf>
