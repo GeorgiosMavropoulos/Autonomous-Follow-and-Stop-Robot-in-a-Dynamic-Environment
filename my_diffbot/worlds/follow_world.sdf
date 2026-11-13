@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="follow_world">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light type="directional" name="sun">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- ===== FLOOR (slightly lowered to avoid z-fighting with the GUI grid) ===== -->
+    <model name="ground">
+      <static>true</static>
+      <pose>0 0 -0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="c">
+          <geometry><plane><normal>0 0 1</normal><size>14 10</size></plane></geometry>
+        </collision>
+        <visual name="v">
+          <geometry><plane><normal>0 0 1</normal><size>14 10</size></plane></geometry>
+          <material><ambient>0.45 0.45 0.48 1</ambient><diffuse>0.45 0.45 0.48 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ===== WALLS ===== -->
+
+    <model name="wall_north">
+      <static>true</static>
+      <pose>0 4 1 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>12.2 0.2 2</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>12.2 0.2 2</size></box></geometry>
+          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_south">
+      <static>true</static>
+      <pose>0 -4 1 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>12.2 0.2 2</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>12.2 0.2 2</size></box></geometry>
+          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_east">
+      <static>true</static>
+      <pose>6 0 1 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.2 8 2</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.2 8 2</size></box></geometry>
+          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-6 0 1 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.2 8 2</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.2 8 2</size></box></geometry>
+          <material><ambient>0.75 0.75 0.78 1</ambient><diffuse>0.75 0.75 0.78 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <!-- ===== SHELVES (solid blocks) ===== -->
+
+    <model name="shelf_north">
+      <static>true</static>
+      <pose>1 1.4 0.9 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>6 0.8 1.8</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>6 0.8 1.8</size></box></geometry>
+          <material><ambient>0.15 0.35 0.75 1</ambient><diffuse>0.15 0.35 0.75 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="shelf_south">
+      <static>true</static>
+      <pose>1 -1.4 0.9 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>6 0.8 1.8</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>6 0.8 1.8</size></box></geometry>
+          <material><ambient>0.15 0.35 0.75 1</ambient><diffuse>0.15 0.35 0.75 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <!-- ===== CRATES ON SHELVES ===== -->
+
+    <model name="crate_top_n0">
+      <static>true</static>
+      <pose>-1.5 1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_s0">
+      <static>true</static>
+      <pose>-1.5 -1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_n1">
+      <static>true</static>
+      <pose>0 1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_s1">
+      <static>true</static>
+      <pose>0 -1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_n2">
+      <static>true</static>
+      <pose>1.5 1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_s2">
+      <static>true</static>
+      <pose>1.5 -1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_n3">
+      <static>true</static>
+      <pose>3 1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_top_s3">
+      <static>true</static>
+      <pose>3 -1.4 2.05 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>0.9 0.6 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <!-- ===== FLOOR CRATES / PALLETS ===== -->
+
+    <model name="crate_floor_0a">
+      <static>true</static>
+      <pose>-5.4 3.3 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.6 0.6 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.6 0.6 0.5</size></box></geometry>
+          <material><ambient>0.9 0.5 0.1 1</ambient><diffuse>0.9 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_0b">
+      <static>true</static>
+      <pose>-5.4 3.3 0.75 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_1a">
+      <static>true</static>
+      <pose>-5.4 -3.3 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.6 0.6 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.6 0.6 0.5</size></box></geometry>
+          <material><ambient>0.9 0.5 0.1 1</ambient><diffuse>0.9 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_1b">
+      <static>true</static>
+      <pose>-5.4 -3.3 0.75 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_2a">
+      <static>true</static>
+      <pose>5.4 3.3 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.6 0.6 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.6 0.6 0.5</size></box></geometry>
+          <material><ambient>0.9 0.5 0.1 1</ambient><diffuse>0.9 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_2b">
+      <static>true</static>
+      <pose>5.4 3.3 0.75 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_3a">
+      <static>true</static>
+      <pose>5.4 -3.3 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.6 0.6 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.6 0.6 0.5</size></box></geometry>
+          <material><ambient>0.9 0.5 0.1 1</ambient><diffuse>0.9 0.5 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="crate_floor_3b">
+      <static>true</static>
+      <pose>5.4 -3.3 0.75 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="v">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>0.65 0.45 0.25 1</ambient><diffuse>0.65 0.45 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+    <!-- ===== AISLE LINES (visual only) ===== -->
+
+    <model name="line_n">
+      <static>true</static>
+      <pose>1 0.95 0.005 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>6 0.08 0.01</size></box></geometry>
+          <material><ambient>0.95 0.8 0.1 1</ambient><diffuse>0.95 0.8 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="line_s">
+      <static>true</static>
+      <pose>1 -0.95 0.005 0 0 0</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry><box><size>6 0.08 0.01</size></box></geometry>
+          <material><ambient>0.95 0.8 0.1 1</ambient><diffuse>0.95 0.8 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    
+
+  </world>
+</sdf>
